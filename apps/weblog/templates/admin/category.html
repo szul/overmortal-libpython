@@ -1,0 +1,49 @@
+{% extends "weblog_master.html" %}
+{% block title %}Weblog Category Form{% endblock %}
+
+{% block content %}
+	{% if category.id %}
+		<h1>Edit: {{ category.name }}</h1>
+	{% else %}
+		<h1>Add a New Category</h1>
+	{% endif %}
+	<form action="{% url overmortal.apps.weblog.admin.category category.id %}" method="post">
+		<table>
+			<tr>
+				<td colspan="2">
+					{% if form.non_field_errors %}
+						<span class="error">{{ form.non_field_errors }}</span>
+					{% endif %}
+				</td>
+			</tr>
+			<tr>
+				<td>
+					{% if form.name.errors %}
+					  <p>{{ form.name.errors }}</p>
+					{% endif %}
+					<label for="id_name">Name:</label>
+				</td>
+				<td>{{ form.name }}</td>
+			</tr>
+			<tr>
+				<td>
+					{% if form.slug.errors %}
+					  <p>{{ form.slug.errors }}</p>
+					{% endif %}
+					<label for="id_slug">Slug:</label>
+				</td>
+				<td>{{ form.slug }}</td>
+			</tr>
+			<tr>
+				<td>&#160;</td>
+			    <td>
+					<input type="submit" value="Save" />
+					<a href="{% url overmortal.apps.weblog.admin.categories %}">Cancel</a>
+					{% if category.id %}
+						<a href="{% url overmortal.apps.weblog.admin.delete_category category.id %}">Delete</a>
+					{% endif %}
+				</td>
+			</tr>
+		</table>
+	</form>
+{% endblock %}

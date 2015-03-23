@@ -1,0 +1,41 @@
+{% extends "weblog_master.html" %}
+{% block title %}
+	Weblog Posts
+{% endblock %}
+{% block meta_keywords %}{% endblock %}
+{% block meta_description %}{% endblock %}
+{% block content %}
+	<h1>Weblog Posts</h1>
+	<aside>
+		<div>
+			<h2>Admin Links</h2>
+			<ul>
+				<li><a href="{% url overmortal.apps.weblog.admin.blog %}">Weblog</a></li>
+				<li><a href="{% url overmortal.apps.weblog.admin.categories %}">Categories</a></li>
+			</ul>
+		</div>
+	</aside>
+	<table cellspacing="20">
+		<tr>
+			<th>Title</th>
+			<th>Author</th>
+			<th>Date Created</th>
+		</tr>
+		{% for post in posts.object_list %}
+			<tr>
+				<td><a href="{% url overmortal.apps.weblog.admin.post post.id %}">{{ post.title }}</a></td>
+				<td>{{ post.byline }}</td>
+				<td>{{ post.date_created }}</td>
+			</tr>
+		{% endfor %}
+	</table>
+	<p>
+		{% if previous_page %}
+			<a href="{% url overmortal.apps.weblog.admin.blog previous_page %} rel="prev">Previous Page</a>
+		{% endif %}
+		{% if next_page %}
+			<a href="{% url overmortal.apps.weblog.admin.blog next_page %} rel="next">Next Page</a>
+		{% endif %}
+	</p>
+	<p><a href="{% url overmortal.apps.weblog.admin.post None %}">Add new post</a></p>
+{% endblock %}

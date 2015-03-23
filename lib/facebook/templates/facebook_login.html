@@ -1,0 +1,17 @@
+{% extends "facebook_master.html" %}
+{% block title %}Facebook Connect{% endblock %}
+{% block content %}
+    <fb:login-button>Login with Facebook</fb:login-button>
+    <div id="fb-root"></div>
+    <script src="http://connect.facebook.net/en_US/all.js"></script>
+    <script>
+        FB.init({appId: '{{ facebook_app_id }}', status: true, cookie: true, xfbml: true});
+        FB.Event.subscribe('auth.sessionChange', function(response) {
+            if (response.session) {
+              window.location.reload(true);
+            } else {
+              // The user has logged out, and the cookie has been cleared
+            }
+        });
+    </script>
+{% endblock %}

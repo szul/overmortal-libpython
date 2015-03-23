@@ -1,0 +1,52 @@
+{% extends "authentication_master.html" %}
+{% block title %}Log In{% endblock %}
+{% block content %}
+	<section id="authentication_login">
+		<h1>Login</h1>
+		{% if error %}
+			<span class="error">Sorry, that's not a valid email or password.</span>
+		{% endif %}
+		<form action="{% url overmortal.lib.authentication.views.login %}" method="post">
+			<table>
+				<tr>
+					<td colspan="2">
+						{% if form.non_field_errors %}
+							<span class="error">{{ form.non_field_errors|join:", " }}</span>
+						{% endif %}
+					</td>
+				</tr>
+				<tr>
+					<td>
+						{% if form.email.errors %}
+						  <p class="error">{{ form.email.errors|join:", " }}</p>
+						{% endif %}
+						<label for="id_email">Email:</label>
+					</td>
+					<td>{{ form.email }}</td>
+				</tr>
+				<tr>
+					<td>
+						{% if form.password.errors %}
+						  <p class="error">{{ form.password.errors|join:", " }}</p>
+						{% endif %}
+						<label for="id_password">Password:</label>
+					</td>
+					<td>{{ form.password }}</td>
+				</tr>
+				<tr>
+					<td>&#160;</td>
+					<td><input type="submit" value="log in" /></td>
+				</tr>
+				<tr>
+					<td><input type="hidden" name="next" value="{{ next|escape }}" /></td>
+				</tr>
+			</table>
+		</form>
+		<!--
+		{% comment %}
+		<a href="{% url www_roamingmojo_com.django_openidconsumer.views.begin %}"><img src="/images/openid-icon-100x100.png" style="border:0px;width:32px;" /></a>
+		{% endcomment %}
+		-->
+		<a href="{% url overmortal.lib.authentication.views.forgot_password %}">forget your password?</a>
+	</section>
+{% endblock %}

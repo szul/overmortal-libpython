@@ -1,0 +1,122 @@
+{% extends "weblog_master.html" %}
+{% block title %}Weblog Post Form{% endblock %}
+
+{% block content %}
+	{% if post.id %}
+		<h1>Edit: {{ post.title }}</h1>
+	{% else %}
+		<h1>Add a New Post</h1>
+	{% endif %}
+	<h1></h1>
+	<form action="{% url overmortal.apps.weblog.admin.post post.id %}" method="post">
+		<table>
+			<tr>
+				<td colspan="2">
+					{% if form.non_field_errors %}
+						<span class="error">{{ form.non_field_errors }}</span>
+					{% endif %}
+				</td>
+			</tr>
+			<tr>
+				<td>
+					{% if form.user.errors %}
+					  <p>{{ form.user.errors }}</p>
+					{% endif %}
+					<label for="id_user">User:</label>
+				</td>
+				<td>{{ form.user }}</td>
+			</tr>
+			<tr>
+				<td>
+					{% if form.title.errors %}
+					  <p>{{ form.title.errors }}</p>
+					{% endif %}
+					<label for="id_title">Title:</label>
+				</td>
+				<td>{{ form.title }}</td>
+			</tr>
+			<tr>
+				<td>
+					{% if form.byline.errors %}
+					  <p>{{ form.byline.errors }}</p>
+					{% endif %}
+					<label for="id_byline">Byline:</label>
+				</td>
+				<td>{{ form.byline }}</td>
+			</tr>
+			<tr>
+				<td>
+					{% if form.category.errors %}
+					  <p>{{ form.category.errors }}</p>
+					{% endif %}
+					<label for="id_category">Category:</label>
+				</td>
+				<td>{{ form.category }}</td>
+			</tr>
+			<tr>
+				<td>
+					{% if form.is_draft.errors %}
+					  <p>{{ form.is_draft.errors }}</p>
+					{% endif %}
+					<label for="id_is_draft">Is Draft:</label>
+				</td>
+				<td>{{ form.is_draft }}</td>
+			</tr>
+			<tr>
+				<td>
+					{% if form.content.errors %}
+					  <p>{{ form.content.errors }}</p>
+					{% endif %}
+					<label for="id_content">Content:</label>
+				</td>
+				<td>{{ form.content }}</td>
+			</tr>
+			<tr>
+				<td>
+					{% if form.tags.errors %}
+					  <p>{{ form.tags.errors }}</p>
+					{% endif %}
+					<label for="id_tags">Tags:</label>
+				</td>
+				<td>{{ form.tags }}</td>
+			</tr>
+			<tr>
+				<td>
+					{% if form.image_link.errors %}
+					  <p>{{ form.image_link.errors }}</p>
+					{% endif %}
+					<label for="id_image_link">Image Link:</label>
+				</td>
+				<td>{{ form.image_link }}</td>
+			</tr>
+			<tr>
+				<td>
+					{% if form.media_link.errors %}
+					  <p>{{ form.media_link.errors }}</p>
+					{% endif %}
+					<label for="id_media_link">Media Link:</label>
+				</td>
+				<td>{{ form.media_link }}</td>
+			</tr>
+			<tr>
+				<td>
+					{% if form.media_type.errors %}
+					  <p>{{ form.media_type.errors }}</p>
+					{% endif %}
+					<label for="id_media_type">Media Type:</label>
+				</td>
+				<td>{{ form.media_type }}</td>
+			</tr>
+			<tr>
+				<td>&#160;</td>
+			    <td>
+					<input type="submit" value="Save" />
+					<a href="{% url overmortal.apps.weblog.admin.blog %}">Cancel</a>
+					{% if post.id %}
+						<a href="{% url overmortal.apps.weblog.admin.delete_post post.id %}">Delete</a>
+					{% endif %}
+				</td>
+			</tr>
+		</table>
+	</form>
+{% endblock %}

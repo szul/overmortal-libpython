@@ -1,0 +1,60 @@
+{% extends "weblog_master.html" %}
+{% load markup %}
+{% block title %}
+	{% if category_name %}
+            {{ weblog_title }}: {{ category_name|title }}
+    {% else %}
+            {{ weblog_title }}
+    {% endif %}
+{% endblock %}
+{% block meta_keywords %}{% endblock %}
+{% block meta_description %}{% endblock %}
+{% block content %}
+	{% if category_name %}
+            <h1>{{ weblog_title }}: {{ category_name|title }}</h1>
+    {% else %}
+            <h1>{{ weblog_title }}</h1>
+    {% endif %}
+	<aside>
+		<div>
+			<h2>Feeds</h2>
+			<ul>
+				<li><a href="/blog/feeds/rss/">RSS</a></li>
+				<li><a href="/blog/feeds/atom/">Atom</a></li>
+			</ul>
+		</div>
+		<div>
+			<h2>Categories</h2>
+			<ul>
+				{% for category in categories %}
+					<li><a href="/blog/category/{{ category.slug }}/">{{ category.name }}</a></li>
+				{% endfor %}
+			</ul>
+		</div>
+	</aside>
+	{% for post in posts.object_list %}
+		<article>
+			<header>
+				<h1><a href="/blog/post/{{ post.id }}-{{ post.title|slugify }}">{{ post.title }}</a></h1>
+				<h2>posted in <a href="/blog/category/{{ post.category.slug }}/">{{ post.category.name }}</a> on <time datetime="{{ post.date_created }}" pubdate="pubdate">{{ post.date_created }}</time></h2>
+			</header>
+			{{ post.content|textile|truncatewords_html:"75" }}
+			<footer>
+				{% if post.tags %}
+					tags:
+						{% for tag in post.tagged_with %}
+							<a class="tag" href="/blog/tag/{{ tag.name }}" title="{{ tag.name }}" rel="tag">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+						{% endfor %}
+				{% endif %}
+			</footer>
+		</article>
+	{% endfor %}
+	<p>
+		{% if previous_page %}
+			<a href="/blog/page/{{ previous_page }}" rel="prev">Previous Page</a>
+		{% endif %}
+		{% if next_page %}
+			<a href="/blog/page/{{ next_page }}" rel="next">Next Page</a>
+		{% endif %}
+	</p>
+{% endblock %}

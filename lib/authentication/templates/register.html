@@ -1,0 +1,54 @@
+{% extends "authentication_master.html" %}
+{% block content %}
+	<form action="{% url overmortal.lib.authentication.views.join %}" method="post">
+		<table>
+			<tr>
+				<td colspan="2">
+					{% if form.non_field_errors %}
+						<span class="error">{{ form.non_field_errors|join:", " }}</span>
+					{% endif %}
+				</td>
+			</tr>
+			<tr>
+				<td>
+					{% if form.username.errors %}
+					  <p>{{ form.username.errors|join:", " }}</p>
+					{% endif %}
+					<label for="id_username">Username:</label>
+				</td>
+				<td>{{ form.username }}</td>
+			</tr>
+			<tr>
+				<td>
+					{% if form.email.errors %}
+					  <p>{{ form.email.errors|join:", " }}</p>
+					{% endif %}
+					<label for="id_email">Email:</label>
+				</td>
+				<td>{{ form.email }}</td>
+			</tr>
+			<tr>
+				<td>
+					{% if form.password1.errors %}
+					  <p>{{ form.password1.errors|join:", " }}</p>
+					{% endif %}
+					<label for="id_password1">Password:</label>
+				</td>
+				<td>{{ form.password1 }}</td>
+			</tr>
+			<tr>
+				<td>
+					{% if form.password2.errors %}
+					  <p>{{ form.password2.errors|join:", " }}</p>
+					{% endif %}
+					<label for="id_password2">Password (again):</label>
+				</td>
+				<td>{{ form.password2 }}</td>
+			</tr>
+			<tr>
+				<td>&#160;</td>
+			    <td><input type="submit" value="Join" /></td>
+			</tr>
+		</table>
+	</form>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "weblog_master.html" %}
+{% load markup %}
+{% block title %}{{post.title }}{% endblock %}
+{% block meta_keywords %}<meta name="keywords" content="{{ post.tags }}" />{% endblock %}
+{% block meta_description %}<meta name="description" content="{{ post.content|striptags|escape|truncatewords:"25" }}" />{% endblock %}
+{% block content %}
+	<article>
+		<header>
+			<h1 class="full" title="{{ post.title }}">{{ post.title }}</h1>
+			<h2>posted in <a href="/blog/category/{{ post.category.slug }}/">{{ post.category.name }}</a> on <time datetime="{{ post.date_created }}" pubdate="pubdate">{{ post.date_created }}</time></h2>
+		</header>
+		{{ post.content|textile }}
+		<footer>
+			{% if post.tags %}
+				tags:
+					{% for tag in post.tagged_with %}
+						<a class="tag" href="/blog/tag/{{ tag.name }}" title="{{ tag.name }}" rel="tag">{{ tag.name }}</a>{% if not forloop.last %}, {% endif %}
+					{% endfor %}
+			{% endif %}
+		</footer>
+		<section id="comments">
+			<h1>Comments:</h1>
+			{% load comments %}
+			{% get_comment_list for post as comment_list %}
+			{% for comment in comment_list %}
+				<div class="comment">
+					{{ comment.comment|textile }}
+					<p><small>posted by
+						{% if comment.user_url %}
+							<a href="{{ comment.user_url }}" rel="nofollow">{{ comment.user_name }}</a>
+						{% else %}
+							<strong>{{ comment.user_name }}</strong>
+						{% endif %}
+					 on {{ comment.submit_date }}</small></p>
+				</div>
+			{% endfor %}
+			{% render_comment_form for post %}
+		</section>
+	</article>
+{% endblock %}

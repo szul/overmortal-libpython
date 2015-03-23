@@ -1,0 +1,45 @@
+{% extends "people_master.html" %}
+{% block content %}
+	<form action="{% url overmortal.lib.people.views.edit_profile %}" method="post">
+		<table>
+			<tr>
+				<td colspan="2">
+					{% if form.non_field_errors %}
+						<span class="error">{{ form.non_field_errors|join:", " }}</span>
+					{% endif %}
+				</td>
+			</tr>
+			<tr>
+				<td>
+					{% if form.location.errors %}
+					  <p>{{ form.location.errors|join:", " }}</p>
+					{% endif %}
+					<label for="id_location">Location:</label>
+				</td>
+				<td>{{ form.location }}</td>
+			</tr>
+			<tr>
+				<td>
+					{% if form.web_site.errors %}
+					  <p>{{ form.web_site.errors|join:", " }}</p>
+					{% endif %}
+					<label for="id_web_site">Web Site:</label>
+				</td>
+				<td>{{ form.web_site }}</td>
+			</tr>
+			<tr>
+				<td>
+					{% if form.description.errors %}
+					  <p>{{ form.description.errors|join:", " }}</p>
+					{% endif %}
+					<label for="id_description">Description:</label>
+				</td>
+				<td>{{ form.description }}</td>
+			</tr>
+			<tr>
+				<td>&#160;</td>
+			    <td><input type="submit" value="Save" /></td>
+			</tr>
+		</table>
+	</form>
+{% endblock %}

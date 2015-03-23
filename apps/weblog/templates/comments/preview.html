@@ -1,0 +1,32 @@
+{% extends "weblog_master.html" %}
+{% load markup %}
+{% load comments %}
+{% block title %}Preview your Comments{% endblock %}
+{% block content %}
+	<form action="{% comment_form_target %}" method="POST">
+	<table id="comment_form">
+		<tr>
+			<td colspan="2"><p><small>(Please note that all comments on posts older than 30 days are moderated and will not appear right away.)</small></p></td>
+		</tr>
+  		{% for field in form %}
+    		{% if field.is_hidden %}
+      			{{ field }}
+    		{% else %}
+				<tr>
+		      		<th {% if field.errors %} class="error"{% endif %}{% ifequal field.name "honeypot" %} style="display:none;"{% endifequal %}>
+		        		{{ field.label_tag }}<br />
+						{% if field.errors %}<small style="font-weight:normal;color:#CC0000;">{{ field.errors|striptags }}</small>{% endif %}
+					</th>
+					<td {% ifequal field.name "honeypot" %} style="display:none;"{% endifequal %}>{{ field }}</td>
+		      	</tr>
+    		{% endif %}
+  		{% endfor %}
+		<tr>
+			<td>&#160;</td>
+			<td class="submit">
+    			<input type="submit" name="submit" class="submit-post" value="Submit" />
+			</td>
+  		</tr>
+  </table>
+</form>
+{% endblock %}

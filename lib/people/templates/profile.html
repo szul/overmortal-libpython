@@ -1,0 +1,40 @@
+{% extends "people_master.html" %}
+{% block title %}{{ user.username|title }}'s Profile{% endblock %}
+{% block meta_keywords %}{{ user.username }}{% endblock %}
+{% block meta_description %}{{ profile.description|striptags|escape|truncatewords:"25" }}{% endblock %}
+{% block content %}
+	<h1>{{ user.username|title }}'s Profile</h1>
+	{% if profile %}
+		<table>
+			<tr>
+				<td>Location:</td>
+				<td>{{ profile.location }}</td>
+			</tr>
+			<tr>
+				<td>Web Site:</td>
+				<td>{{ profile.web_site|urlize }}</td>
+			</tr>
+			<tr>
+				<td>Description:</td>
+			</tr>
+			<tr>
+				<td>{{ profile.description }}</td>
+			</tr>
+		</table>
+		{% if show_profile_map %}
+			<script type="text/javascript" src="http://www.google.com/jsapi?key={{ api_key }}"></script>
+			<script type="text/javascript">
+			var map;
+			google.load("maps", "2.x");
+			function initialize() {
+				map = new google.maps.Map2(document.getElementById("map"));
+				map.setCenter(new google.maps.LatLng({{ profile.latitude }}, {{ profile.longitude }}), 12);
+				map.addControl(new GLargeMapControl());
+				map.addOverlay(new GMarker(new GLatLng({{ profile.latitude }}, {{ profile.longitude }})));
+			}
+			google.setOnLoadCallback(initialize);
+			</script>
+			<div id="map" style="width:250px;height:250px;"></div>
+		{% endif %}
+	{% endif %}
+{% endblock %}

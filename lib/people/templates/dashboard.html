@@ -1,0 +1,7 @@
+{% extends "people_master.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+	<h1>Dashboard</h1>
+    <a href="{% url overmortal.lib.people.views.profile request.user.username %}">profile</a>
+	<a href="{% url overmortal.lib.people.views.edit_profile %}">edit profile</a>
+{% endblock %}
